@@ -19,16 +19,19 @@ namespace KikeletPanzio
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void BtnUgyfelHozzaad_Click(object sender, RoutedEventArgs e)
-        {
 
         }
 
-        private void BtnUjUgyfelHozzaad_Click(object sender, RoutedEventArgs e)
+        private void MenuRegisztracio_Click(object sender, RoutedEventArgs e)
         {
+            RegisztracioAblak regisztracio = new RegisztracioAblak();
+            regisztracio.ShowDialog();
+        }
 
+        private void MenuFoglalas_Click(object sender, RoutedEventArgs e)
+        {
+            FoglalasAblak foglalas = new FoglalasAblak();
+            foglalas.ShowDialog();
         }
     }
 }
