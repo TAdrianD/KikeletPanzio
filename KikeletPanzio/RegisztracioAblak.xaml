@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KikeletPanzio"
         mc:Ignorable="d"
-        Title="Regisztració" Height="450" Width="800">
+        Title="Regisztráció" Height="450" Width="800">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="5"/>
@@ -31,20 +31,20 @@
         <Label Content="Adja meg az email címét:"/>
         <TextBox x:Name="TbxEmail"/>
         <CheckBox x:Name="CbxVIPUgyfel" Content="VIP Ügyfél" Margin="5"/>
+        <Label Content="Az ön azonosítója:"/>
+        <TextBox x:Name="TbxAzonosito" IsReadOnly="True"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="BtnMegse" Content="Mégsem" Click="BtnMegse_Click"/>
             <Button x:Name="BtnRegisztracio" Content="Regisztráció" Click="BtnRegisztracio_Click"/>
         </StackPanel>
-        <ListView ItemsSource="{Binding Ugyfelek}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Azonosító" DisplayMemberBinding="{Binding Azonosito}" />
-                    <GridViewColumn Header="Név" DisplayMemberBinding="{Binding Nev}" />
-                    <GridViewColumn Header="Születési Dátum" DisplayMemberBinding="{Binding SzuletesiDatum}" />
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" />
-                    <GridViewColumn Header="VIP Ügyfél-e" DisplayMemberBinding="{Binding VIPUgyfel}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid ItemsSource="{Binding Ugyfelek}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Azonosító" Binding="{Binding Azonosito}" />
+                <DataGridTextColumn Header="Név" Binding="{Binding Nev}" />
+                <DataGridTextColumn Header="Születési Dátum" Binding="{Binding SzuletesiDatum}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                <DataGridCheckBoxColumn Header="VIP Ügyfél-e" Binding="{Binding VIPUgyfel}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </StackPanel>
 </Window>
