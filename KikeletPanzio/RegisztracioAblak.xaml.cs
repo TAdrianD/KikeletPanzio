@@ -56,7 +56,7 @@ namespace KikeletPanzio
         {
             if (!string.IsNullOrWhiteSpace(TbxNev.Text) && !string.IsNullOrWhiteSpace(TbxEmail.Text))
             {
-                string azonosito = TbxNev.Text.ToLower().Replace(" ", "") + "_" + DateTime.Now.ToString("yyyyMMdd");
+                string azonosito = TbxNev.Text.ToLower().Replace(" ", "").Replace("á", "a").Replace("é", "e").Replace("ö", "o").Replace("ő", "o").Replace("ó", "o").Replace("ü", "u").Replace("ú", "u").Replace("ű", "u").Replace("í", "i") + "_" + DateTime.Now.ToString("yyyyMMdd");
                 TbxAzonosito.Text = azonosito;
 
                 DateTime szuletesiDatum;
@@ -73,6 +73,7 @@ namespace KikeletPanzio
 
                 MessageBox.Show("Az ön azonosítója: " + azonosito, "Sikeres regisztráció!", MessageBoxButton.OK, MessageBoxImage.Information);
                 OnPropertyChanged(nameof(Ugyfelek));
+                DgrUgyfelek.Items.Refresh();
             }
             else
             {

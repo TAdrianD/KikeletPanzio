@@ -37,7 +37,7 @@
             <Button x:Name="BtnMegse" Content="Mégsem" Click="BtnMegse_Click"/>
             <Button x:Name="BtnRegisztracio" Content="Regisztráció" Click="BtnRegisztracio_Click"/>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding Ugyfelek}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid x:Name="DgrUgyfelek" ItemsSource="{Binding Ugyfelek}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Azonosító" Binding="{Binding Azonosito}" />
                 <DataGridTextColumn Header="Név" Binding="{Binding Nev}" />
