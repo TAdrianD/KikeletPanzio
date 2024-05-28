@@ -70,11 +70,12 @@
         </StackPanel>
         <DataGrid x:Name="DgrFoglalasok" ItemsSource="{Binding Foglalasok}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Szoba száma" Binding="{Binding SzobaSzam}" />
+
                 <DataGridTextColumn Header="Ügyfél Azonósítója" Binding="{Binding UgyfelAzonosito}" />
+                <DataGridTextColumn Header="Fő száma" Binding="{Binding FoSzam}" />
+                <DataGridTextColumn Header="Szoba száma" Binding="{Binding SzobaSzam}" />
                 <DataGridTextColumn Header="Érkezés Dátuma" Binding="{Binding ErkezesDatuma}" />
                 <DataGridTextColumn Header="Távozás Dátuma" Binding="{Binding TavozasDatuma}" />
-                <DataGridTextColumn Header="Fő száma" Binding="{Binding FoSzam}" />
                 <DataGridTextColumn Header="Teljes Ár" Binding="{Binding TeljesAr}" />
                 <DataGridTextColumn Header="Foglalás állapota" Binding="{Binding Allapot}" />
             </DataGrid.Columns>
