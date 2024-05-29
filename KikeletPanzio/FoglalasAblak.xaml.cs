@@ -115,7 +115,10 @@ namespace KikeletPanzio
                 TbxTeljesAr.Text = fizetendo.ToString();
                 TbxAllapot.Text = "Lefoglalva";
 
-                foglalasok.Add(new Foglalas($"{kivalasztottUgyfel.Azonosito},{foglaltFo},{kivalasztottSzoba.SzobaSzama},{DateTime.Now:yyyy-MM-dd},{DateTime.Now:yyyy-MM-dd},{fizetendo},{TbxAllapot.Text}"));
+                // Új Foglalas objektum létrehozása a kiválasztott adatok alapján
+                DateTime erkezesDatum = DtpErkezesDatum.SelectedDate ?? DateTime.Today;
+                DateTime tavozasDatum = DtpTavozasDatum.SelectedDate ?? DateTime.Today;
+                foglalasok.Add(new Foglalas($"{kivalasztottUgyfel.Azonosito},{foglaltFo},{kivalasztottSzoba.SzobaSzama},{erkezesDatum:yyyy-MM-dd},{tavozasDatum:yyyy-MM-dd},{fizetendo},{TbxAllapot.Text}"));
 
                 SaveFoglalasok("foglalas.txt");
 
