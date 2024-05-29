@@ -28,22 +28,28 @@
         </Menu>
         <TabControl>
             <TabItem Header="Szobák">
-                <ListView ItemsSource="{Binding Szobak}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Szobaszám" DisplayMemberBinding="{Binding SzobaSzama}" />
-                            <GridViewColumn Header="Férőhelyek száma" DisplayMemberBinding="{Binding FerohelyekSzama}" />
-                            <GridViewColumn Header="Aktuális ár" DisplayMemberBinding="{Binding ArFoPerEjszakara}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <DataGrid x:Name="DgrSzobak" ItemsSource="{Binding Szobak}" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Szobaszám" Binding="{Binding SzobaSzama}" />
+                        <DataGridTextColumn  Header="Férőhelyek száma" Binding="{Binding FerohelyekSzama}" />
+                        <DataGridTextColumn Header="Aktuális ár (Ft)" Binding="{Binding ArFoPerEjszakara}" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
 
             <TabItem Header="Ügyfelek">
-               
+                <DataGrid x:Name="DgrUgyfelek" ItemsSource="{Binding Ugyfelek}" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Azonosító" Binding="{Binding Azonosito}" />
+                        <DataGridTextColumn Header="Név" Binding="{Binding Nev}" />
+                        <DataGridTextColumn Header="Születési Dátum" Binding="{Binding SzuletesiDatum}" />
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                        <DataGridCheckBoxColumn Header="VIP Ügyfél-e" Binding="{Binding VIPUgyfel}" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem Header="Statisztikák">
-                
+
             </TabItem>
         </TabControl>
     </StackPanel>

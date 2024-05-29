@@ -32,31 +32,23 @@
         <StackPanel Orientation="Horizontal">
             <Label Content="Hány főre foglal? "/>
             <ComboBox x:Name="CobxHanyFo" Width="50" HorizontalContentAlignment="Center">
-                <ComboBoxItem Content="2" Selector.IsSelected="True"/>
-                <ComboBoxItem Content="3"/>
-                <ComboBoxItem Content="4"/>
+                
             </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Kérem, válasszon szobát: "/>
-            <ComboBox x:Name="CobxSzoba" Width="50" SelectedValuePath="SzobaSzam" HorizontalContentAlignment="Center">
-                <ComboBoxItem Content="1" Selector.IsSelected="True"/>
-                <ComboBoxItem Content="2"/>
-                <ComboBoxItem Content="3"/>
-                <ComboBoxItem Content="4"/>
-                <ComboBoxItem Content="5"/>
-                <ComboBoxItem Content="6"/>
+            <ComboBox x:Name="CobxSzoba" DisplayMemberPath="SzobaSzama" Width="50" SelectedValuePath="SzobaSzam" HorizontalContentAlignment="Center">
             </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Válassza ki az érkezés dátumát:"/>
             <DatePicker x:Name="DtpErkezesDatum" Margin="5"/>
         </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Válassza ki a távozás dátumát:"/>
-                <DatePicker x:Name="DtpTavozasDatum" Margin="5"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Válassza ki a távozás dátumát:"/>
+            <DatePicker x:Name="DtpTavozasDatum" Margin="5"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
             <Label Content="Fizetendő összeg: "/>
             <TextBox x:Name="TbxTeljesAr" IsReadOnly="True" Width="100"/>
         </StackPanel>
@@ -70,13 +62,12 @@
         </StackPanel>
         <DataGrid x:Name="DgrFoglalasok" ItemsSource="{Binding Foglalasok}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-
-                <DataGridTextColumn Header="Ügyfél Azonósítója" Binding="{Binding UgyfelAzonosito}" />
-                <DataGridTextColumn Header="Fő száma" Binding="{Binding FoSzam}" />
+                <DataGridTextColumn Header="Ügyfél Azonósítója" Binding="{Binding Azonosito}" />
+                <DataGridTextColumn Header="Fő száma" Binding="{Binding FoglaltFo}" />
                 <DataGridTextColumn Header="Szoba száma" Binding="{Binding SzobaSzam}" />
-                <DataGridTextColumn Header="Érkezés Dátuma" Binding="{Binding ErkezesDatuma}" />
-                <DataGridTextColumn Header="Távozás Dátuma" Binding="{Binding TavozasDatuma}" />
-                <DataGridTextColumn Header="Teljes Ár" Binding="{Binding TeljesAr}" />
+                <DataGridTextColumn Header="Érkezés Dátuma" Binding="{Binding ErkezesiDatum}" />
+                <DataGridTextColumn Header="Távozás Dátuma" Binding="{Binding TavozasiDatum}" />
+                <DataGridTextColumn Header="Teljes Ár (Ft)" Binding="{Binding TeljesAr}" />
                 <DataGridTextColumn Header="Foglalás állapota" Binding="{Binding Allapot}" />
             </DataGrid.Columns>
         </DataGrid>

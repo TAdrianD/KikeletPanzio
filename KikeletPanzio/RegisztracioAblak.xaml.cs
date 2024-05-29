@@ -8,9 +8,6 @@ using System.Windows;
 
 namespace KikeletPanzio
 {
-    /// <summary>
-    /// Interaction logic for RegisztracioAblak.xaml
-    /// </summary>
     public partial class RegisztracioAblak : Window, INotifyPropertyChanged
     {
         internal static List<Ugyfel> ugyfelek = new List<Ugyfel>();
@@ -36,7 +33,7 @@ namespace KikeletPanzio
         {
             if (!File.Exists(ugyfelfile))
             {
-                MessageBox.Show($"The file {ugyfelfile} does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"A fájl {ugyfelfile} nem létezik.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
