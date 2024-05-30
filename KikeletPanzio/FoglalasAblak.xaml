@@ -32,9 +32,7 @@
         <StackPanel Orientation="Horizontal">
             <Label Content="Hány főre foglal? "/>
             <ComboBox x:Name="CobxHanyFo" Width="50" HorizontalContentAlignment="Center">
-                <ComboBoxItem Content="2" Selector.IsSelected="True"/>
-                <ComboBoxItem Content="3"/>
-                <ComboBoxItem Content="4"/>
+
             </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
@@ -65,11 +63,11 @@
         <DataGrid x:Name="DgrFoglalasok" ItemsSource="{Binding Foglalasok}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ügyfél Azonósítója" Binding="{Binding Azonosito}" />
-                <DataGridTextColumn Header="Fő száma" Binding="{Binding FoSzam}" />
+                <DataGridTextColumn Header="Fő száma" Binding="{Binding FoglaltFo}" />
                 <DataGridTextColumn Header="Szoba száma" Binding="{Binding SzobaSzam}" />
                 <DataGridTextColumn Header="Érkezés Dátuma" Binding="{Binding ErkezesiDatum}" />
                 <DataGridTextColumn Header="Távozás Dátuma" Binding="{Binding TavozasiDatum}" />
-                <DataGridTextColumn Header="Teljes Ár" Binding="{Binding TeljesAr}" />
+                <DataGridTextColumn Header="Teljes Ár (Ft)" Binding="{Binding TeljesAr}" />
                 <DataGridTextColumn Header="Foglalás állapota" Binding="{Binding Allapot}" />
             </DataGrid.Columns>
         </DataGrid>

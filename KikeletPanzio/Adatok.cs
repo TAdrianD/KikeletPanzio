@@ -14,17 +14,17 @@ namespace KikeletPanzio
 
         public Szoba(string sor)
         {
-            var parts = sor.Split(',');
-            SzobaSzama = int.Parse(parts[0]);
-            FerohelyekSzama = int.Parse(parts[1]);
-            ArFoPerEjszakara = int.Parse(parts[2]);
+            var elemek = sor.Split(',');
+            SzobaSzama = int.Parse(elemek[0]);
+            FerohelyekSzama = int.Parse(elemek[1]);
+            ArFoPerEjszakara = int.Parse(elemek[2]);
         }
 
 
         public Szoba(int szobaszama, int ferohelyekszama, int arfoperejszaka)
         {
             int SzobaSzama = szobaszama;
-            int FerohelyekSzama = ferohelyekszama; 
+            int FerohelyekSzama = ferohelyekszama;
             int ArFoPerEjszakara = arfoperejszaka;
         }
 
@@ -45,12 +45,12 @@ namespace KikeletPanzio
 
         public Ugyfel(string data)
         {
-            var parts = data.Split(',');
-            Azonosito = parts[0];
-            Nev = parts[1];
-            SzuletesiDatum = DateTime.Parse(parts[2]);
-            Email = parts[3];
-            VIP = bool.Parse(parts[4]);
+            var elemek = data.Split(',');
+            Azonosito = elemek[0];
+            Nev = elemek[1];
+            SzuletesiDatum = DateTime.Parse(elemek[2]);
+            Email = elemek[3];
+            VIP = bool.Parse(elemek[4]);
         }
 
         public Ugyfel(string azonosito, string nev, DateTime szuletesiDatum, string email, bool vip)
@@ -72,18 +72,19 @@ namespace KikeletPanzio
     public class Foglalas
     {
         public string Azonosito { get; set; }
-        public int HanyFo { get; set; }
+        public int FoglaltFo { get; set; }
         public string SzobaSzam { get; set; }
         public DateTime ErkezesiDatum { get; set; }
         public DateTime TavozasiDatum { get; set; }
         public int TeljesAr { get; set; }
         public string Allapot { get; set; }
 
+
         public Foglalas(string sor)
         {
             var elemek = sor.Split(',');
             Azonosito = elemek[0];
-            HanyFo = int.Parse(elemek[1]);
+            FoglaltFo = int.Parse(elemek[1]);
             SzobaSzam = elemek[2];
             ErkezesiDatum = DateTime.Parse(elemek[3]);
             TavozasiDatum = DateTime.Parse(elemek[4]);
@@ -93,7 +94,7 @@ namespace KikeletPanzio
 
         public override string ToString()
         {
-            return $"{Azonosito},{HanyFo},{SzobaSzam},{ErkezesiDatum:yyyy-MM-dd},{TavozasiDatum:yyyy-MM-dd},{TeljesAr},{Allapot}";
+            return $"{Azonosito},{FoglaltFo},{SzobaSzam},{ErkezesiDatum:yyyy-MM-dd},{TavozasiDatum:yyyy-MM-dd},{TeljesAr},{Allapot}";
         }
     }
 
