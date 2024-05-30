@@ -9,16 +9,29 @@ namespace KikeletPanzio
 {
     public partial class FoglalasAblak : Window
     {
-        internal static List<Foglalas> foglalasok = new List<Foglalas>();
-        internal static List<Ugyfel> ugyfelek = new List<Ugyfel>();
+        private List<Foglalas> foglalasok = new List<Foglalas>();
+        private List<Ugyfel> ugyfelek = new List<Ugyfel>();
+        private List<Szoba> szobak = new List<Szoba>();
 
         public FoglalasAblak()
         {
             InitializeComponent();
+            LoadData();
+            DgrFoglalasok.ItemsSource = foglalasok;
+            CobxUgyfel.ItemsSource = ugyfelek;
+            CobxHanyFo.Items.Add("2");
+            CobxHanyFo.Items.Add("3");
+            CobxHanyFo.Items.Add("4");
+            CobxSzoba.ItemsSource = szobak;
+            CobxSzoba.SelectedIndex = 0;
+            CobxSzoba.DisplayMemberPath = "SzobaSzama";
+        }
+
+        private void LoadData()
+        {
             LoadFromFoglalas("foglalas.txt");
             LoadFromUgyfel("ugyfel.txt");
-            DgrFoglalasok.ItemsSource = foglalasok;
-            CobxUgyfel.ItemsSource = ugyfelek; // Az ügyfelek hozzáadása a ComboBox-hoz
+            LoadFromSzoba("szoba.txt");
         }
 
         private void LoadFromUgyfel(string ugyfelfile)
@@ -36,6 +49,40 @@ namespace KikeletPanzio
             }
         }
 
+        private void LoadFromSzoba(string szobafile)
+        {
+            if (!File.Exists(szobafile))
+            {
+                MessageBox.Show($"The file {szobafile} does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string[] szobaLines = File.ReadAllLines(szobafile);
+            for (int i = 1; i < szobaLines.Length; i++)
+            {
+                Szoba szoba = new Szoba(szobaLines[i]);
+                if (szoba.SzobaSzama >= 1 && szoba.SzobaSzama <= 6)
+                {
+                    szobak.Add(szoba);
+                }
+            }
+        }
+
+        private void LoadFromFoglalas(string foglalasfile)
+        {
+            if (!File.Exists(foglalasfile))
+            {
+                MessageBox.Show($"The file {foglalasfile} does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string[] foglalasLines = File.ReadAllLines(foglalasfile);
+            for (int i = 1; i < foglalasLines.Length; i++)
+            {
+                foglalasok.Add(new Foglalas(foglalasLines[i]));
+            }
+        }
+
         private void BtnMegse_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -43,33 +90,18 @@ namespace KikeletPanzio
 
         private void BtnFoglalas_Click(object sender, RoutedEventArgs e)
         {
-            if (CobxSzoba.SelectedItem != null && CobxUgyfel.SelectedItem != null)
+            if (CobxSzoba.SelectedItem != null && CobxUgyfel.SelectedItem != null && CobxHanyFo.SelectedItem != null)
             {
                 int fizetendo = 0;
                 Szoba kivalasztottSzoba = (Szoba)CobxSzoba.SelectedItem;
                 Ugyfel kivalasztottUgyfel = (Ugyfel)CobxUgyfel.SelectedItem;
+                int hanyFo = Convert.ToInt32((CobxHanyFo.SelectedItem as ComboBoxItem)?.Content);
 
-                if (CobxHanyFo.SelectedItem != null)
+                if ((hanyFo == 2 && (kivalasztottSzoba.SzobaSzama == 1 || kivalasztottSzoba.SzobaSzama == 2)) ||
+                    (hanyFo == 3 && (kivalasztottSzoba.SzobaSzama == 3 || kivalasztottSzoba.SzobaSzama == 4)) ||
+                    (hanyFo == 4 && (kivalasztottSzoba.SzobaSzama == 5 || kivalasztottSzoba.SzobaSzama == 6)))
                 {
-                    int hanyFo = Convert.ToInt32(((ComboBoxItem)CobxHanyFo.SelectedItem).Content);
-
-                    if (hanyFo == 2 && (kivalasztottSzoba.SzobaSzama == 1 || kivalasztottSzoba.SzobaSzama == 2))
-                    {
-                        fizetendo = (int)(kivalasztottSzoba.ArFoEjszakara * hanyFo);
-                    }
-                    else if ((hanyFo == 3 || hanyFo == 4) && (kivalasztottSzoba.SzobaSzama == 3 || kivalasztottSzoba.SzobaSzama == 4))
-                    {
-                        fizetendo = (int)(kivalasztottSzoba.ArFoEjszakara * hanyFo);
-                    }
-                    else if (hanyFo == 4 && (kivalasztottSzoba.SzobaSzama == 5 || kivalasztottSzoba.SzobaSzama == 6))
-                    {
-                        fizetendo = (int)(kivalasztottSzoba.ArFoEjszakara * hanyFo);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Nem megfelelő szoba lett kiválasztva a férőhelyek számához!", "Hibaüzenet", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
+                    fizetendo = kivalasztottSzoba.ArFoPerEjszakara * hanyFo;
 
                     if (kivalasztottUgyfel.VIP)
                     {
@@ -77,27 +109,35 @@ namespace KikeletPanzio
                     }
 
                     TbxTeljesAr.Text = fizetendo.ToString();
+                    TbxAllapot.Text = "Lefoglalva";
+
+                    foglalasok.Add(new Foglalas($"{kivalasztottUgyfel.Azonosito},{hanyFo},{kivalasztottSzoba.SzobaSzama},{DateTime.Now:yyyy-MM-dd},{DateTime.Now:yyyy-MM-dd},{fizetendo},{TbxAllapot.Text}"));
+                    SaveFoglalasok("foglalas.txt");
+
+                    DgrFoglalasok.Items.Refresh();
+                    CobxSzoba.SelectedIndex = -1;
+                    CobxUgyfel.SelectedIndex = -1;
+                    CobxHanyFo.SelectedIndex = -1;
+
                     MessageBox.Show("Szoba lefoglalva", "Sikeres foglalás!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Nincsen kiválasztva a férőhelyek száma!", "Hibaüzenet", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Nem megfelelő szoba lett kiválasztva a férőhelyek számához!", "Hibaüzenet", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Nincsen kiválasztva szoba vagy ügyfél, kérem válasszon egyet!", "Hibaüzenet", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Nincsen kiválasztva szoba, ügyfél vagy férőhelyek száma!", "Hibaüzenet", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
 
-        private static void LoadFromFoglalas(string foglalasfile)
+        private void SaveFoglalasok(string foglalasfile)
         {
-            string[] foglalas = File.ReadAllLines(foglalasfile);
-            for (int i = 1; i < foglalas.Length; i++)
-            {
-                foglalasok.Add(new Foglalas(foglalas[i]));
-            }
+            var foglalasokLines = new List<string> { "Azonosito,SzobaSzam,ErkezesiDatum,TavozasiDatum,HanyFo,TeljesAr,Allapot" };
+            foglalasokLines.AddRange(foglalasok.Select(f => f.ToString()));
+            File.WriteAllLines(foglalasfile, foglalasokLines);
         }
     }
 }

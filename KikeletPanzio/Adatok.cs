@@ -8,18 +8,32 @@ namespace KikeletPanzio
 {
     public class Szoba
     {
-        public Szoba(string inputString)
-        {
-            string[] szobadata = inputString.Split(';');
-            SzobaSzama = int.Parse(szobadata[0]);
-            FerohelyekSzama = int.Parse(szobadata[1]);
-            ArFoEjszakara = decimal.Parse(szobadata[2]);
-        }
-
         public int SzobaSzama { get; set; }
         public int FerohelyekSzama { get; set; }
-        public decimal ArFoEjszakara { get; set; }
+        public int ArFoPerEjszakara { get; set; }
+
+        public Szoba(string sor)
+        {
+            var parts = sor.Split(',');
+            SzobaSzama = int.Parse(parts[0]);
+            FerohelyekSzama = int.Parse(parts[1]);
+            ArFoPerEjszakara = int.Parse(parts[2]);
+        }
+
+
+        public Szoba(int szobaszama, int ferohelyekszama, int arfoperejszaka)
+        {
+            int SzobaSzama = szobaszama;
+            int FerohelyekSzama = ferohelyekszama; 
+            int ArFoPerEjszakara = arfoperejszaka;
+        }
+
+        public override string ToString()
+        {
+            return $"{SzobaSzama},{FerohelyekSzama},{ArFoPerEjszakara}";
+        }
     }
+
 
     public class Ugyfel
     {
@@ -57,25 +71,31 @@ namespace KikeletPanzio
 
     public class Foglalas
     {
-        public Foglalas(string inputString)
+        public string Azonosito { get; set; }
+        public int HanyFo { get; set; }
+        public string SzobaSzam { get; set; }
+        public DateTime ErkezesiDatum { get; set; }
+        public DateTime TavozasiDatum { get; set; }
+        public int TeljesAr { get; set; }
+        public string Allapot { get; set; }
+
+        public Foglalas(string sor)
         {
-            string[] foglalasdata = inputString.Split(";");
-            SzobaSzam = int.Parse(foglalasdata[0]);
-            UgyfelAzonosito = foglalasdata[1];
-            ErkezesDatuma = DateTime.Parse(foglalasdata[2]);
-            TavozasDatuma = DateTime.Parse(foglalasdata[3]);
-            FoSzam = int.Parse(foglalasdata[4]);
-            TeljesAr = decimal.Parse(foglalasdata[5]);
-            Allapot = foglalasdata[6];
+            var elemek = sor.Split(',');
+            Azonosito = elemek[0];
+            HanyFo = int.Parse(elemek[1]);
+            SzobaSzam = elemek[2];
+            ErkezesiDatum = DateTime.Parse(elemek[3]);
+            TavozasiDatum = DateTime.Parse(elemek[4]);
+            TeljesAr = int.Parse(elemek[5]);
+            Allapot = elemek[6];
         }
 
-        public int SzobaSzam { get; set; }
-        public string UgyfelAzonosito { get; set; }
-        public DateTime ErkezesDatuma { get; set; }
-        public DateTime TavozasDatuma { get; set; }
-        public int FoSzam { get; set; }
-        public decimal TeljesAr { get; set; }
-        public string Allapot { get; set; }
+        public override string ToString()
+        {
+            return $"{Azonosito},{HanyFo},{SzobaSzam},{ErkezesiDatum:yyyy-MM-dd},{TavozasiDatum:yyyy-MM-dd},{TeljesAr},{Allapot}";
+        }
     }
+
 
 }
