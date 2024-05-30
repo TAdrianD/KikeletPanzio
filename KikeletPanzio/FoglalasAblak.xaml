@@ -32,7 +32,7 @@
         <StackPanel Orientation="Horizontal">
             <Label Content="Hány főre foglal? "/>
             <ComboBox x:Name="CobxHanyFo" Width="50" HorizontalContentAlignment="Center">
-
+                
             </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">

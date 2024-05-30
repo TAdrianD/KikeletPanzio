@@ -36,7 +36,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            
+
             <TabItem Header="Ügyfelek">
                 <DataGrid x:Name="DgrUgyfelek" ItemsSource="{Binding Ugyfelek}" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Columns>
@@ -49,32 +49,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Statisztikák">
-                <StackPanel Margin="10">
-                    <TextBlock Text="Statisztikai adatok" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
 
-                    <TextBlock Text="Összes bevétel:" FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Kezdő dátum:" VerticalAlignment="Center"/>
-                        <DatePicker Name="DtpStartDatum" Margin="10,0,0,0"/>
-                        <TextBlock Text="Befejező dátum:" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        <DatePicker Name="DtpEndDatum" Margin="10,0,0,0"/>
-                        <Button Content="Számol" Click="BtnCalculateRevenue_Click" Margin="10,0,0,0"/>
-                    </StackPanel>
-                    <TextBlock Name="TbkOsszesBevetel" FontWeight="Bold" Margin="0,10,0,10"/>
-
-                    <TextBlock Text="Legtöbbet kiadott szoba:" FontWeight="Bold"/>
-                    <TextBlock Name="TbkLegtobbetKiadottSzoba" FontWeight="Bold" Margin="0,10,0,10"/>
-
-                    <TextBlock Text="Visszajáró vendégek listája (fizetett összeg szerint csökkenő sorrendben):" FontWeight="Bold"/>
-                    <ListView Name="LvwVisszajaroVendegek" Margin="0,10,0,0">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Ügyfél neve" DisplayMemberBinding="{Binding Nev}" Width="200"/>
-                                <GridViewColumn Header="Fizetett összeg" DisplayMemberBinding="{Binding FizetettOsszeg}" Width="100"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
             </TabItem>
         </TabControl>
     </StackPanel>

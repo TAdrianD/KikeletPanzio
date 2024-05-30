@@ -24,7 +24,7 @@ namespace KikeletPanzio
         public Szoba(int szobaszama, int ferohelyekszama, int arfoperejszaka)
         {
             int SzobaSzama = szobaszama;
-            int FerohelyekSzama = ferohelyekszama;
+            int FerohelyekSzama = ferohelyekszama; 
             int ArFoPerEjszakara = arfoperejszaka;
         }
 
