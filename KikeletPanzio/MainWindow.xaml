@@ -36,7 +36,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-
+            
             <TabItem Header="Ügyfelek">
                 <DataGrid x:Name="DgrUgyfelek" ItemsSource="{Binding Ugyfelek}" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Columns>
