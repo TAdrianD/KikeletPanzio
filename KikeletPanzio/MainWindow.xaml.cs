@@ -1,16 +1,9 @@
-﻿using System.Text;
-using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
-using System.Windows.Ink;
 
 namespace KikeletPanzio
 {
@@ -18,16 +11,19 @@ namespace KikeletPanzio
     {
         internal static List<Szoba> szobak = new List<Szoba>();
         internal static List<Ugyfel> ugyfelek = new List<Ugyfel>();
+        private List<Foglalas> foglalasok = new List<Foglalas>();
 
         public MainWindow()
         {
             InitializeComponent();
             LoadFromSzoba("szoba.txt");
             LoadFromUgyfel("ugyfel.txt");
+            LoadFromFoglalas("foglalas.txt");
             DataContext = this;
             DgrSzobak.ItemsSource = szobak;
             DgrUgyfelek.ItemsSource = ugyfelek;
             DgrUgyfelek.Items.Refresh();
+            BtnShowStatistics_Click(null, null);
         }
 
         private static void LoadFromSzoba(string szobafile)
@@ -60,6 +56,21 @@ namespace KikeletPanzio
             }
         }
 
+        private void LoadFromFoglalas(string foglalasfile)
+        {
+            if (!File.Exists(foglalasfile))
+            {
+                MessageBox.Show($"A fájl {foglalasfile} nem létezik!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string[] foglalasLines = File.ReadAllLines(foglalasfile);
+            for (int i = 1; i < foglalasLines.Length; i++)
+            {
+                foglalasok.Add(new Foglalas(foglalasLines[i]));
+            }
+        }
+
         private void MenuRegisztracio_Click(object sender, RoutedEventArgs e)
         {
             RegisztracioAblak regisztracio = new RegisztracioAblak();
@@ -72,6 +83,56 @@ namespace KikeletPanzio
             FoglalasAblak foglalas = new FoglalasAblak();
             foglalas.ShowDialog();
             DgrUgyfelek.Items.Refresh();
+            LoadFromFoglalas("foglalas.txt");
+        }
+
+        private void BtnCalculateRevenue_Click(object sender, RoutedEventArgs e)
+        {
+            if (DtpStartDatum.SelectedDate == null || DtpEndDatum.SelectedDate == null)
+            {
+                MessageBox.Show("Kérjük, válassza ki a kezdő és befejező dátumot.", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            DateTime startDatum = DtpStartDatum.SelectedDate.Value;
+            DateTime endDatum = DtpEndDatum.SelectedDate.Value;
+
+            int osszesBevetel = foglalasok
+                .Where(f => f.ErkezesiDatum >= startDatum && f.TavozasiDatum <= endDatum)
+                .Sum(f => f.TeljesAr);
+
+            TbkOsszesBevetel.Text = $"Összes bevétel: {osszesBevetel} Ft";
+        }
+
+        private void BtnShowStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            // Legtöbbet kiadott szoba
+            var legtobbetKiadottSzoba = foglalasok
+                .GroupBy(f => f.SzobaSzam)
+                .OrderByDescending(g => g.Count())
+                .FirstOrDefault()?.Key;
+
+            TbkLegtobbetKiadottSzoba.Text = legtobbetKiadottSzoba != null
+                ? $"Legtöbbet kiadott szoba: {legtobbetKiadottSzoba}"
+                : "Nincs adat a legtöbbet kiadott szobára.";
+
+            // Visszajáró vendégek listája
+            var visszajaroVendegek = foglalasok
+                .GroupBy(f => f.Azonosito)
+                .Select(g => new
+                {
+                    Ugyfel = ugyfelek.First(u => u.Azonosito == g.Key),
+                    FizetettOsszeg = g.Sum(f => f.TeljesAr)
+                })
+                .OrderByDescending(x => x.FizetettOsszeg)
+                .Select(x => new
+                {
+                    x.Ugyfel.Nev,
+                    x.FizetettOsszeg
+                })
+                .ToList();
+
+            LvwVisszajaroVendegek.ItemsSource = visszajaroVendegek;
         }
     }
 }
