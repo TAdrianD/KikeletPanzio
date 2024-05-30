@@ -1,0 +1,7 @@
+SzobaSzama,FerohelyekSzama,ArFoPerEjszakara
+1,2,6000
+2,2,6000
+3,3,9000
+4,3,9000
+5,4,12000
+6,5,12000

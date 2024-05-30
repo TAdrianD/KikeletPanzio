@@ -1,0 +1,4 @@
+Azonosito,FoglaltFo,SzobaSzam,ErkezesiDatum,TavozasiDatum,TeljesAr,Allapot
+magyarjanos_20240528,2,1,2024-05-14,2024-05-16,11640,Lefoglalva
+kissanna_20240528,3,3,2024-05-08,2024-05-12,27000,Lefoglalva
+farkasliza_20240528,4,5,2024-05-24,2024-05-28,46560,Lefoglalva

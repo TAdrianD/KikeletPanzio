@@ -1,0 +1,12 @@
+Azonosito,Nev,SzuletesiDatum,Email,VIP
+magyarjanos_20240528,Magyar János,2000-11-17,magyarjanos@gmail.com,True
+kissanna_20240528,Kiss Anna,1995-05-12,kissanna@gmail.com,False
+nagyistvan_20240528,Nagy István,1988-03-22,nagyistvan@gmail.com,True
+szaboadam_20240528,Szabó Ádám,1992-07-08,szaboadam@gmail.com,False
+farkasliza_20240528,Farkas Liza,2001-12-30,farkasliza@gmail.com,True
+kovacsgabor_20240528,Kovács Gábor,1996-09-15,kovacsgabor@gmail.com,False
+horvathdora_20240528,Horváth Dóra,1990-04-05,horvathdora@gmail.com,True
+tothlaszlo_20240528,Tóth László,1998-02-19,tothlaszlo@gmail.com,False
+molnarzsuzsa_20240528,Molnár Zsuzsa,1993-06-25,molnarzsuzsa@gmail.com,True
+baloghtamas_20240528,Balogh Tamás,1985-11-11,baloghtamas@gmail.com,False
+vereslili_20240528,Veres Lili,2002-08-29,vereslili@gmail.com,True
